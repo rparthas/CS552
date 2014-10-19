@@ -1,6 +1,5 @@
 package edu.iit.cs552.entity;
 
-
 /**
  * This contains the job detail of each task It contains five properties 1.
  * priority column 2. ascending if true 3. instance 4. execution time
@@ -84,11 +83,11 @@ public class Job {
 		this.period = period;
 	}
 
+	@Override
 	public String toString() {
-		//return "Instance:[" + instance + "] Execution Time[" + executionTime
-			//	+ "]Period[" + period + "]Deadline[" + deadline
-				//+ "]Arrival time[" + arrivalTime + "]Name[" + name + "]";
-		return pretty();
+		return "Job [period=" + period + ", name=" + name + ", executionTime="
+				+ executionTime + ", deadline=" + deadline + ", arrivalTime="
+				+ arrivalTime + ", instance=" + instance + "]";
 	}
 
 	public void execute() {
@@ -96,6 +95,11 @@ public class Job {
 	}
 
 	public String pretty() {
-		return "Instance:[" + instance + "] Name[" + name + "]";
+		return "Job [Instance=" + instance + ",Name=" + name + "]";
+	}
+
+	public boolean equals(Job job) {
+		return job != null && this.name.equals(job.name)
+				&& this.instance == job.instance;
 	}
 }

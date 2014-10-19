@@ -1,7 +1,7 @@
 package edu.iit.cs552.scheduler;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +18,20 @@ public class Dispatcher {
 	public void dispatchTasks(List<Task> tasks, String algorithm) {
 		logger.info("--------------Start of Dispatcher---------");
 		List<Integer> periods = new ArrayList<Integer>();
+		List<String> stats = new ArrayList<String>();
+		double utilization = 0.0;
+
 		for (Task task : tasks) {
 			periods.add(task.period);
+			utilization = ((double)task.executionTime / (double)task.period) + utilization;
 		}
+
 		int hyperPeriod = UtilityFunctions.computeLCM(periods);
-		Map<Long, List<Job>> jobMap = new LinkedHashMap<Long, List<Job>>();
+		stats.add("Scheduler running for a hyperperiod of[" + hyperPeriod + "]");
+		stats.add("Utilization Percent of the taskset is ["
+				+ (utilization * 100) + "]");
+
+		Map<Long, List<Job>> jobMap = new HashMap<Long, List<Job>>();
 		for (Task task : tasks) {
 			int noOfinstances = hyperPeriod / task.period;
 			if (hyperPeriod % task.period != 0)
@@ -47,6 +56,7 @@ public class Dispatcher {
 
 			}
 		}
+
 		Scheduler scheduler = null;
 		switch (algorithm) {
 		case "EDF":
@@ -57,7 +67,12 @@ public class Dispatcher {
 			break;
 		}
 
-		scheduler.schedule(hyperPeriod, jobMap);
+		stats.addAll(scheduler.schedule(hyperPeriod, jobMap));
+		logger.fatal("--------------Stats of the taskset begins---------");
+		for (String stat : stats) {
+			logger.fatal(stat);
+		}
+		logger.fatal("--------------Stats of the taskset ends---------");
 		logger.info("--------------End of Dispatcher---------");
 
 	}

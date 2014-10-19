@@ -1,5 +1,6 @@
 package edu.iit.cs552.scheduler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -25,10 +26,14 @@ public abstract class Scheduler {
 		}
 	}
 
-	public void schedule(long totalPeriod, Map<Long, List<Job>> jobMap) {
+	public List<String> schedule(long totalPeriod, Map<Long, List<Job>> jobMap) {
 		log.info("--------------Start of Scheduler---------");
+		List<String> stats = new ArrayList<String>();
 		Timer.reset();
 		long time = 0;
+		int preEmptions = 0;
+		int miss = 0;
+		Job prevJob = null;
 		while (time != totalPeriod) {
 			List<Job> jobs = jobMap.get(time);
 			if (jobs != null) {
@@ -42,7 +47,11 @@ public abstract class Scheduler {
 				if (time >= job.arrivalTime) {
 					if (time + job.executionTime <= job.deadline) {
 						log.info("Executing job[" + job + "]");
+						if (prevJob != null && job.equals(prevJob)) {
+							preEmptions++;
+						}
 						job.execute();
+						prevJob = job;
 						if (job.executionTime == 0) {
 							pq.remove(job);
 						}
@@ -51,12 +60,16 @@ public abstract class Scheduler {
 								+ "] missed its deadline at time ["
 								+ Timer.getTime() + "]");
 						pq.remove(job);
+						miss++;
 					}
 				}
 			}
 			time = Timer.addTime();
 		}
+		stats.add("No of Preemptions[" + preEmptions + "]");
+		stats.add("No of Deadline Misses[" + miss + "]");
 		log.info("--------------End of Scheduler---------");
+		return stats;
 	}
 
 }

@@ -3,6 +3,7 @@ package edu.iit.cs552.entity;
 public class Task {
 
 	public String name;
+
 	public String getName() {
 		return name;
 	}
@@ -28,6 +29,12 @@ public class Task {
 
 	public void setExecutionTime(int executionTime) {
 		this.executionTime = executionTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Task [name=" + name + ", period=" + period + ", executionTime="
+				+ executionTime + "]";
 	}
 
 }

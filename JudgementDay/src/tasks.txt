@@ -1,0 +1,14 @@
+#Permanent Overload
+#J1,8,4
+#J2,12,6
+#J3,20,5
+#Transient Overload
+#J1,5,2
+#J2,9,3
+#J3,20,1
+#J4,30,1
+#Normal load
+J1,5,1
+J2,6,1
+J3,12,2
+J4,8,2
