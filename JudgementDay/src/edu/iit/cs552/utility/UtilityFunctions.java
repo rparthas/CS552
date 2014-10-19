@@ -1,13 +1,12 @@
 package edu.iit.cs552.utility;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class UtilityFunctions {
 
 	
-	public static final int INCREMENT=10;
+	
 	
 	public static Integer computeLCM(List<Integer> numbers) {
 
@@ -45,7 +44,5 @@ public class UtilityFunctions {
 		return num1 * num2 / gcd2(num1, num2);
 	}
 	
-	public static long getTime(){
-		return Calendar.getInstance().getTimeInMillis();
-	}
+	
 }

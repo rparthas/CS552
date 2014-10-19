@@ -1,5 +1,6 @@
 package edu.iit.cs552.entity;
 
+
 /**
  * This contains the job detail of each task It contains five properties 1.
  * priority column 2. ascending if true 3. instance 4. execution time
@@ -9,43 +10,63 @@ package edu.iit.cs552.entity;
  */
 public class Job {
 
-	public int executionTime;
+	public long period;
 
-	public int getExecutionTime() {
+	public long getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(long period) {
+		this.period = period;
+	}
+
+	public String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public long executionTime;
+
+	public long getExecutionTime() {
 		return executionTime;
 	}
 
-	public void setExecutionTime(int executionTime) {
+	public void setExecutionTime(long executionTime) {
 		this.executionTime = executionTime;
 	}
 
-	public int deadline;
-	
-	public int arrivalTime;
+	public long deadline;
 
-	public int getArrivalTime() {
+	public long arrivalTime;
+
+	public long getArrivalTime() {
 		return arrivalTime;
 	}
 
-	public void setArrivalTime(int arrivalTime) {
+	public void setArrivalTime(long arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
 
-	public int getDeadline() {
+	public long getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(int deadline) {
+	public void setDeadline(long deadline) {
 		this.deadline = deadline;
 	}
 
-	public int instance;
+	public long instance;
 
-	public int getInstance() {
+	public long getInstance() {
 		return instance;
 	}
 
-	public void setInstance(int instance) {
+	public void setInstance(long instance) {
 		this.instance = instance;
 	}
 
@@ -53,15 +74,28 @@ public class Job {
 
 	}
 
-	public Job(int arrivalTime,int deadline, int executionTime, int instance) {
+	public Job(long arrivalTime, long deadline, long period,
+			long executionTime, long instance, String name) {
 		this.deadline = deadline;
 		this.instance = instance;
 		this.executionTime = executionTime;
 		this.arrivalTime = arrivalTime;
+		this.name = name;
+		this.period = period;
 	}
 
 	public String toString() {
-		return "Instance:[" + instance + "] Execution Time[" + executionTime
-				+ "]Deadline[" + deadline + "]Arrival time["+arrivalTime+"]";
+		//return "Instance:[" + instance + "] Execution Time[" + executionTime
+			//	+ "]Period[" + period + "]Deadline[" + deadline
+				//+ "]Arrival time[" + arrivalTime + "]Name[" + name + "]";
+		return pretty();
+	}
+
+	public void execute() {
+		executionTime--;
+	}
+
+	public String pretty() {
+		return "Instance:[" + instance + "] Name[" + name + "]";
 	}
 }
