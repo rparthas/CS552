@@ -3,11 +3,13 @@ package edu.iit.cs552.utility;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 public class UtilityFunctions {
 
-	
-	
-	
+	static Logger logger = Logger.getLogger(UtilityFunctions.class);
+
 	public static Integer computeLCM(List<Integer> numbers) {
 
 		Integer LCM = 0;
@@ -43,6 +45,16 @@ public class UtilityFunctions {
 	private static int lcm2(int num1, int num2) {
 		return num1 * num2 / gcd2(num1, num2);
 	}
-	
-	
+
+	public static void printStat(List<String> stats) {
+		Level level = Logger.getRootLogger().getLevel();
+		Logger.getRootLogger().setLevel(Level.INFO);
+		logger.info("--------------Stats of the taskset begins---------");
+		for (String stat : stats) {
+			logger.fatal(stat);
+		}
+		logger.info("--------------Stats of the taskset ends---------");
+		Logger.getRootLogger().setLevel(level);
+	}
+
 }

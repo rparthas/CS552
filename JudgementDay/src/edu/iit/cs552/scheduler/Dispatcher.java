@@ -39,11 +39,11 @@ public class Dispatcher {
 			for (int i = 0; i < noOfinstances; i++) {
 				Job job = null;
 				if (i == 0) {
-					job = new Job(0, task.period * 1, task.period,
+					job = new Job(0, task.deadline * 1, task.period,
 							task.executionTime, 1, task.name);
 				} else {
 					int j = i + 1;
-					job = new Job(task.period * i, task.period * j,
+					job = new Job(task.deadline * i, task.period * j,
 							task.period, task.executionTime, j, task.name);
 
 				}
@@ -68,12 +68,10 @@ public class Dispatcher {
 		}
 
 		stats.addAll(scheduler.schedule(hyperPeriod, jobMap));
-		logger.fatal("--------------Stats of the taskset begins---------");
-		for (String stat : stats) {
-			logger.fatal(stat);
-		}
-		logger.fatal("--------------Stats of the taskset ends---------");
+		UtilityFunctions.printStat(stats);
 		logger.info("--------------End of Dispatcher---------");
 
 	}
+
+	
 }

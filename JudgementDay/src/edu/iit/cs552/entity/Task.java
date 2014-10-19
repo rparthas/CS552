@@ -14,6 +14,15 @@ public class Task {
 
 	public int period;
 	public int executionTime;
+	public int deadline;
+
+	public int getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(int deadline) {
+		this.deadline = deadline;
+	}
 
 	public int getPeriod() {
 		return period;
@@ -31,10 +40,16 @@ public class Task {
 		this.executionTime = executionTime;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return "Task [name=" + name + ", period=" + period + ", executionTime="
-				+ executionTime + "]";
+				+ executionTime + ", deadline=" + deadline + "]";
+	}
+
+	public boolean equals(Task task) {
+		return task.executionTime == executionTime && task.period == period;
 	}
 
 }

@@ -35,6 +35,7 @@ public class Executor {
 				task.executionTime = Integer.parseInt(taskDescr[2]);
 				task.period = Integer.parseInt(taskDescr[1]);
 				task.name = taskDescr[0];
+				task.deadline=Integer.parseInt(taskDescr[3]);
 				tasks.add(task);
 			}
 

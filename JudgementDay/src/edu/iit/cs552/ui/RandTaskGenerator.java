@@ -13,24 +13,33 @@ public class RandTaskGenerator {
 	static Logger logger = Logger.getLogger(RandTaskGenerator.class);
 
 	public static void main(String[] args) {
+
+		for (int n = 5; n <= 10; n++) {
+			prepare(n);
+		}
+
+	}
+
+	private static void prepare(int n) {
 		List<Task> tasks = new ArrayList<Task>();
-		int n = 5;
 		for (int i = 1; i <= n; i++) {
 			int period = ((int) (Math.random() * n));
 			int executionTime = (int) (period * 0.9);
-			if (executionTime == 0) {
-				executionTime = 1;
-			}
-			if (period == executionTime) {
-				period = period + 1;
+			if (executionTime == 0 || period == 0 || executionTime == period) {
+				continue;
 			}
 			Task task = new Task();
 			task.name = "J" + i;
 			task.period = period;
 			task.executionTime = executionTime;
-			tasks.add(task);
+			task.deadline = period;
+			if (!tasks.contains(task))
+				tasks.add(task);
 		}
-		Logger.getRootLogger().setLevel(Level.INFO);
+		for (Task task : tasks) {
+			logger.fatal(task);
+		}
+		Logger.getRootLogger().setLevel(Level.FATAL);
 		logger.fatal("RM Scheduling starts");
 		new Dispatcher().dispatchTasks(tasks, "RM");
 		logger.fatal("EDF Scheduling starts");

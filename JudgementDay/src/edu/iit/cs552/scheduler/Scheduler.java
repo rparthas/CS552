@@ -56,7 +56,7 @@ public abstract class Scheduler {
 							pq.remove(job);
 						}
 					} else {
-						log.fatal("Job[" + job
+						log.error("Job[" + job
 								+ "] missed its deadline at time ["
 								+ Timer.getTime() + "]");
 						pq.remove(job);
