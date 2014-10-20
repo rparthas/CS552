@@ -54,6 +54,7 @@ public abstract class Scheduler {
 						prevJob = job;
 						if (job.executionTime == 0) {
 							pq.remove(job);
+							prevJob = null;
 						}
 					} else {
 						log.error("Job[" + job
@@ -66,6 +67,14 @@ public abstract class Scheduler {
 			}
 			time = Timer.addTime();
 		}
+		while (!pq.isEmpty()) {
+			Job job = pq.remove();
+			log.error("Job[" + job + "] missed its deadline at time ["
+					+ Timer.getTime() + "]");
+			pq.remove(job);
+			miss++;
+		}
+
 		stats.add("No of Preemptions[" + preEmptions + "]");
 		stats.add("No of Deadline Misses[" + miss + "]");
 		log.info("--------------End of Scheduler---------");

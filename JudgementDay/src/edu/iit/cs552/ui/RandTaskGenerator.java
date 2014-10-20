@@ -14,9 +14,7 @@ public class RandTaskGenerator {
 
 	public static void main(String[] args) {
 
-		for (int n = 5; n <= 10; n++) {
-			prepare(n);
-		}
+		prepare(Integer.parseInt(args[0]));
 
 	}
 
@@ -24,7 +22,7 @@ public class RandTaskGenerator {
 		List<Task> tasks = new ArrayList<Task>();
 		for (int i = 1; i <= n; i++) {
 			int period = ((int) (Math.random() * n));
-			int executionTime = (int) (period * 0.9);
+			int executionTime = (int) (period * Math.random() * 0.9);
 			if (executionTime == 0 || period == 0 || executionTime == period) {
 				continue;
 			}
