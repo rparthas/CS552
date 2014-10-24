@@ -10,6 +10,13 @@ import org.apache.log4j.Logger;
 import edu.iit.cs552.entity.Job;
 import edu.iit.cs552.utility.Timer;
 
+/**
+ * Abstract class for scheduling tasks
+ * It does the heavylifting of scheduling. 
+ * It internally implements a priority queue to handle the situation
+ * @author Rajagopal
+ *
+ */
 public abstract class Scheduler {
 	Logger log = Logger.getLogger(Scheduler.class);
 

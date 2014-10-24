@@ -6,6 +6,11 @@ import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+/**
+ * This is helper class containing lot of utility functions.
+ * @author Rajagopal
+ *
+ */
 public class UtilityFunctions {
 
 	static Logger logger = Logger.getLogger(UtilityFunctions.class);

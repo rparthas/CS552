@@ -1,8 +1,14 @@
 package edu.iit.cs552.entity;
 
 /**
- * This contains the job detail of each task It contains five properties 1.
- * priority column 2. ascending if true 3. instance 4. execution time
+ * This contains the job detail of each task 
+ * It contains Six properties 
+ * 1.Period - repeating time interval
+ * 2.name - identifier for the task
+ * 3.instance - unique identifier of the particular run of the task
+ * 4.Arrival Time - The time at which job is available for execution
+ * 5.Deadline - Absolute deadline for the job 
+ * 6.Execution time - The time taken for completion of the job
  * 
  * @author Rajagopal
  *

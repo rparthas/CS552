@@ -8,7 +8,12 @@ import org.apache.log4j.Logger;
 
 import edu.iit.cs552.entity.Task;
 import edu.iit.cs552.scheduler.Dispatcher;
-
+/**
+ * This generates random tasks and evaluates the scheduler performance
+ * This is scheduled to make sure that scheduler runs at overload condition
+ * @author Rajagopal
+ *
+ */
 public class RandTaskGenerator {
 	static Logger logger = Logger.getLogger(RandTaskGenerator.class);
 

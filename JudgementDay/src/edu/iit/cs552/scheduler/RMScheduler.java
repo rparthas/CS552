@@ -7,6 +7,11 @@ import org.apache.log4j.Logger;
 
 import edu.iit.cs552.entity.Job;
 
+/**
+ * Static priority scheduler schedules based on the period of the task
+ * @author Rajagopal
+ *
+ */
 public class RMScheduler extends Scheduler implements Comparator<Job> {
 
 	Logger log = Logger.getLogger(RMScheduler.class);

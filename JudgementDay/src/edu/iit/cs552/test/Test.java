@@ -5,7 +5,11 @@ import java.util.List;
 
 import edu.iit.cs552.entity.Task;
 import edu.iit.cs552.scheduler.Dispatcher;
-
+/**
+ * Test class for testing scheduler
+ * @author Rajagopal
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) {

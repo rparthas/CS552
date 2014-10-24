@@ -12,7 +12,9 @@ import org.apache.log4j.Logger;
 
 import edu.iit.cs552.entity.Task;
 import edu.iit.cs552.scheduler.Dispatcher;
-
+/**
+ * Entry point for testing via files
+ */
 public class Executor {
 	static Logger logger = Logger.getLogger(Executor.class);
 

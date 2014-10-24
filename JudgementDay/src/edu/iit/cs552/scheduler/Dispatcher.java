@@ -10,22 +10,34 @@ import org.apache.log4j.Logger;
 import edu.iit.cs552.entity.Job;
 import edu.iit.cs552.entity.Task;
 import edu.iit.cs552.utility.UtilityFunctions;
-
+/**
+ * This is the entry point for generating job instances and passing them to scheduler
+ * @author Rajagopal
+ *
+ */
 public class Dispatcher {
 
 	Logger logger = Logger.getLogger(Dispatcher.class);
 
+	/**
+	 * Main Entry point for dispatching
+	 * @param tasks
+	 * @param algorithm
+	 */
 	public void dispatchTasks(List<Task> tasks, String algorithm) {
 		logger.info("--------------Start of Dispatcher---------");
 		List<Integer> periods = new ArrayList<Integer>();
 		List<String> stats = new ArrayList<String>();
 		double utilization = 0.0;
 
+		//Calculates utilization for each task
 		for (Task task : tasks) {
 			periods.add(task.period);
 			utilization = ((double)task.executionTime / (double)task.period) + utilization;
 		}
+		
 
+		//Hyperperiod calculation
 		int hyperPeriod = UtilityFunctions.computeLCM(periods);
 		stats.add("Scheduler running for a hyperperiod of[" + hyperPeriod + "]");
 		stats.add("Utilization Percent of the taskset is ["
@@ -57,6 +69,7 @@ public class Dispatcher {
 			}
 		}
 
+		//Decides the scheduler based on the argument
 		Scheduler scheduler = null;
 		switch (algorithm) {
 		case "EDF":

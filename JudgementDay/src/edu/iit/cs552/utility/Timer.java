@@ -1,5 +1,10 @@
 package edu.iit.cs552.utility;
 
+/**
+ * Static class for tracking time 
+ * @author Rajagopal
+ *
+ */
 public class Timer {
 
 	static long time =0;
