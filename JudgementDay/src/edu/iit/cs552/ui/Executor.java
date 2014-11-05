@@ -34,10 +34,10 @@ public class Executor {
 				}
 				Task task = new Task();
 				String[] taskDescr = line.split(",");
-				task.executionTime = Integer.parseInt(taskDescr[2]);
-				task.period = Integer.parseInt(taskDescr[1]);
+				task.executionTime = Long.parseLong(taskDescr[2]);
+				task.period = Long.parseLong(taskDescr[1]);
 				task.name = taskDescr[0];
-				task.deadline=Integer.parseInt(taskDescr[3]);
+				task.deadline=Long.parseLong(taskDescr[3]);
 				tasks.add(task);
 			}
 

@@ -38,8 +38,8 @@ public abstract class Scheduler {
 		List<String> stats = new ArrayList<String>();
 		Timer.reset();
 		long time = 0;
-		int preEmptions = 0;
-		int miss = 0;
+		long preEmptions = 0;
+		long miss = 0;
 		Job prevJob = null;
 		while (time != totalPeriod) {
 			List<Job> jobs = jobMap.get(time);

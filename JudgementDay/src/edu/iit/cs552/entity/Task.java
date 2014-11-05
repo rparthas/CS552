@@ -24,31 +24,31 @@ public class Task {
 		this.name = name;
 	}
 
-	public int period;
-	public int executionTime;
-	public int deadline;
+	public long period;
+	public long executionTime;
+	public long deadline;
 
-	public int getDeadline() {
+	public long getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(int deadline) {
+	public void setDeadline(long deadline) {
 		this.deadline = deadline;
 	}
 
-	public int getPeriod() {
+	public long getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(int period) {
+	public void setPeriod(long period) {
 		this.period = period;
 	}
 
-	public int getExecutionTime() {
+	public long getExecutionTime() {
 		return executionTime;
 	}
 
-	public void setExecutionTime(int executionTime) {
+	public void setExecutionTime(long executionTime) {
 		this.executionTime = executionTime;
 	}
 
@@ -60,8 +60,31 @@ public class Task {
 				+ executionTime + ", deadline=" + deadline + "]";
 	}
 
-	public boolean equals(Task task) {
-		return task.executionTime == executionTime && task.period == period;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ (int) (executionTime ^ (executionTime >>> 32));
+		result = prime * result + (int) (period ^ (period >>> 32));
+		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Task other = (Task) obj;
+		if (executionTime != other.executionTime)
+			return false;
+		if (period != other.period)
+			return false;
+		return true;
+	}
+	
+	
 }

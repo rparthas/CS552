@@ -15,13 +15,13 @@ public class UtilityFunctions {
 
 	static Logger logger = Logger.getLogger(UtilityFunctions.class);
 
-	public static Integer computeLCM(List<Integer> numbers) {
+	public static Long computeLCM(List<Long> numbers) {
 
-		Integer LCM = 0;
+		Long LCM = 0L;
 		if (numbers.size() == 1)
 			LCM = numbers.get(0);
 		else {
-			List<Integer> lcms = new ArrayList<Integer>();
+			List<Long> lcms = new ArrayList<Long>();
 			for (int i = 0; i < numbers.size(); i = i + 2) {
 				if (i == numbers.size() - 1) {
 					lcms.add(numbers.get(i));
@@ -36,7 +36,7 @@ public class UtilityFunctions {
 		return LCM;
 	}
 
-	private static int gcd2(int num1, int num2) {
+	private static long gcd2(long num1, long num2) {
 		while (num1 != num2) {
 
 			if (num1 > num2)
@@ -47,7 +47,7 @@ public class UtilityFunctions {
 		return num1;
 	}
 
-	private static int lcm2(int num1, int num2) {
+	private static long lcm2(long num1, long num2) {
 		return num1 * num2 / gcd2(num1, num2);
 	}
 

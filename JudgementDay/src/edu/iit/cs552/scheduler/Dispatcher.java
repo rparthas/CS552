@@ -26,7 +26,7 @@ public class Dispatcher {
 	 */
 	public void dispatchTasks(List<Task> tasks, String algorithm) {
 		logger.info("--------------Start of Dispatcher---------");
-		List<Integer> periods = new ArrayList<Integer>();
+		List<Long> periods = new ArrayList<Long>();
 		List<String> stats = new ArrayList<String>();
 		double utilization = 0.0;
 
@@ -38,23 +38,23 @@ public class Dispatcher {
 		
 
 		//Hyperperiod calculation
-		int hyperPeriod = UtilityFunctions.computeLCM(periods);
+		long hyperPeriod = UtilityFunctions.computeLCM(periods);
 		stats.add("Scheduler running for a hyperperiod of[" + hyperPeriod + "]");
 		stats.add("Utilization Percent of the taskset is ["
 				+ (utilization * 100) + "]");
 
 		Map<Long, List<Job>> jobMap = new HashMap<Long, List<Job>>();
 		for (Task task : tasks) {
-			int noOfinstances = hyperPeriod / task.period;
+			long noOfinstances = hyperPeriod / task.period;
 			if (hyperPeriod % task.period != 0)
 				noOfinstances++;
-			for (int i = 0; i < noOfinstances; i++) {
+			for (long i = 0; i < noOfinstances; i++) {
 				Job job = null;
 				if (i == 0) {
 					job = new Job(0, task.deadline * 1, task.period,
 							task.executionTime, 1, task.name);
 				} else {
-					int j = i + 1;
+					long j = i + 1;
 					job = new Job(task.deadline * i, task.period * j,
 							task.period, task.executionTime, j, task.name);
 
