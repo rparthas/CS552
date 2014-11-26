@@ -17,7 +17,6 @@ public class TestDB {
 		columns.add("company");
 		columns.add("description");
 		columns.add("price");
-		columns.add("time");
 
 		DatabaseScheduler scheduler = new DatabaseScheduler(columns, table);
 		columns.clear();
@@ -26,8 +25,7 @@ public class TestDB {
 		columns.add("Tata Consultancy Services");
 		columns.add("IT Company");
 		columns.add("$454");
-		columns.add("08-11-14 15:48:23");
-
+		
 		scheduler.performTransaction(new Transaction(columns, 5));
 		columns.clear();
 
@@ -35,7 +33,6 @@ public class TestDB {
 		columns.add("Tata Consultancy Services");
 		columns.add("IT Company");
 		columns.add("$456");
-		columns.add("08-11-14 15:48:23");
 
 		scheduler.performTransaction(new Transaction(columns, 10));
 		columns.clear();
