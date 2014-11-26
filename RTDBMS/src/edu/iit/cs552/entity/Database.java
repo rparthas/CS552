@@ -1,11 +1,11 @@
 package edu.iit.cs552.entity;
 
-import static edu.iit.cs552.entity.Constants.*;
+import static edu.iit.cs552.entity.Constants.DELIMITER;
+import static edu.iit.cs552.entity.Constants.PRIMARY;
 import static edu.iit.cs552.utility.UtilityFunctions.close;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
@@ -19,15 +19,8 @@ public class Database {
 	public void createTable(String name, List<String> columns) {
 		try {
 
-			StringBuffer buffer = new StringBuffer();
-			boolean first = true;
-			for (String col : columns) {
-				if (!first)
-					buffer.append(DELIMITER);
-				first = false;
-				buffer.append(col);
-			}
-			if (!writeToFile(buffer.toString(), name)) {
+			StringBuffer buffer = createData(columns);
+			if (!writeToFile(buffer.toString(), name, false)) {
 				throw new Exception("Write failed");
 			}
 		} catch (Exception e) {
@@ -35,12 +28,28 @@ public class Database {
 		}
 	}
 
+	private StringBuffer createData(List<String> columns) {
+		StringBuffer buffer = new StringBuffer();
+		boolean first = true;
+		for (String col : columns) {
+			if (!first)
+				buffer.append(DELIMITER);
+			first = false;
+			buffer.append(col);
+		}
+		return buffer;
+	}
+
 	public void addData(List<String> data, String table) {
-		BufferedReader reader = null;
+
 		try {
 			String result = findByColumn(table, PRIMARY, data.get(0));
 			if (result.isEmpty()) {
-				createTable(table, data);
+
+				StringBuffer buffer = createData(data);
+				if (!writeToFile(buffer.toString(), table, true)) {
+					throw new Exception("Write failed");
+				}
 			} else {
 				updateData(data, table, PRIMARY, data.get(0));
 			}
@@ -50,7 +59,7 @@ public class Database {
 
 	}
 
-	private void modifyData(List<String> values, String table, String column,
+	public void updateData(List<String> values, String table, String column,
 			String value) {
 
 		BufferedReader reader = null;
@@ -66,17 +75,10 @@ public class Database {
 					if (index == -1)
 						throw new Exception("Column does not exist");
 				} else if (value.equals(rowCols[index])) {
-					StringBuffer buffer = new StringBuffer();
-					boolean initial = true;
-					for (String col : values) {
-						if (!initial)
-							buffer.append(DELIMITER);
-						initial = false;
-						buffer.append(col);
-					}
+					StringBuffer buffer = createData(values);
 					data = buffer.toString();
 				}
-				writeToFile(data, table + "1");
+				writeToFile(data, table + "1", true);
 				first = false;
 			}
 
@@ -85,12 +87,7 @@ public class Database {
 		} finally {
 			close(reader);
 		}
-	}
 
-	public void updateData(List<String> values, String table, String column,
-			String value) {
-
-		modifyData(values, table, column, value);
 		File file = new File(table);
 		if (file.delete()) {
 			File newFile = new File(table + "1");
@@ -128,14 +125,15 @@ public class Database {
 		return result;
 	}
 
-	public boolean writeToFile(String content, String fname) throws Exception {
+	public boolean writeToFile(String content, String fname, boolean append)
+			throws Exception {
 		boolean wrote = false;
 
 		FileWriter writer = null;
 		try {
 			File file = new File(fname);
 			if (file.exists()) {
-				writer = new FileWriter(fname, true);
+				writer = new FileWriter(fname, append);
 			} else {
 				writer = new FileWriter(fname);
 			}

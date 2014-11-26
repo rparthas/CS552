@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.iit.cs552.entity.Database;
+import edu.iit.cs552.entity.Transaction;
+import edu.iit.cs552.utility.DatabaseScheduler;
 
 public class TestDB {
 
@@ -16,21 +18,28 @@ public class TestDB {
 		columns.add("description");
 		columns.add("price");
 		columns.add("time");
-		db.createTable(table, columns);
+
+		DatabaseScheduler scheduler = new DatabaseScheduler(columns, table);
 		columns.clear();
+
 		columns.add("TCS");
 		columns.add("Tata Consultancy Services");
 		columns.add("IT Company");
 		columns.add("$454");
 		columns.add("08-11-14 15:48:23");
-		db.addData(columns, table);
+
+		scheduler.performTransaction(new Transaction(columns, 5));
 		columns.clear();
+
 		columns.add("TCS");
 		columns.add("Tata Consultancy Services");
 		columns.add("IT Company");
 		columns.add("$456");
 		columns.add("08-11-14 15:48:23");
-		db.updateData(columns, table, "symbol", "TCS");
+
+		scheduler.performTransaction(new Transaction(columns, 10));
+		columns.clear();
+
 		System.out.println(db.findByColumn(table, "symbol", "TCS"));
 
 	}
