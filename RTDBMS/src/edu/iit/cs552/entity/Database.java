@@ -1,7 +1,7 @@
 package edu.iit.cs552.entity;
 
-import static edu.iit.cs552.entity.Constants.DELIMITER;
-import static edu.iit.cs552.entity.Constants.PRIMARY;
+import static edu.iit.cs552.utility.Constants.DELIMITER;
+import static edu.iit.cs552.utility.Constants.PRIMARY;
 import static edu.iit.cs552.utility.UtilityFunctions.close;
 
 import java.io.BufferedReader;

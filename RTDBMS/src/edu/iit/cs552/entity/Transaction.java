@@ -15,6 +15,16 @@ public class Transaction {
 	private long deadline = 0;
 
 	private long absoluteDeadline = 0;
+	
+	private int aedMapping;
+
+	public int getAedMapping() {
+		return aedMapping;
+	}
+
+	public void setAedMapping(int aedMapping) {
+		this.aedMapping = aedMapping;
+	}
 
 	public List<String> getDataset() {
 		return dataset;
@@ -28,8 +38,6 @@ public class Transaction {
 		super();
 		this.dataset = dataset;
 		this.deadline = deadline;
-		this.start = getTime();
-		absoluteDeadline = deadline + start;
 	}
 
 	public long getAbsoluteDeadline() {
@@ -48,13 +56,16 @@ public class Transaction {
 		return Calendar.getInstance().getTimeInMillis();
 	}
 
-	private long getElapsed() {
-		return getTime() - start;
+	public String toString() {
+		// return dataset + "start[" + start + "]Deadline[" + absoluteDeadline
+		// + "]Relative[" + deadline + "]";
+		return dataset + "Relative[" + deadline + "]";
+
 	}
 
-	public String toString() {
-		return dataset + "start[" + start + "]Deadline[" + absoluteDeadline
-				+ "]Relative[" + deadline + "] Elapsed[" + getElapsed() + "]";
+	public void schedule() {
+		start = getTime();
+		absoluteDeadline = deadline + start;
 	}
 
 }
