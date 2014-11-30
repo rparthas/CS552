@@ -11,8 +11,6 @@ import edu.iit.cs552.entity.Transaction;
 public class EDFScheduler extends TransactionScheduler implements
 		Comparator<Transaction> {
 
-	Logger log = Logger.getLogger(EDFScheduler.class);
-
 	@Override
 	public int compare(Transaction t1, Transaction t2) {
 		// TODO Auto-generated method stub
@@ -30,5 +28,6 @@ public class EDFScheduler extends TransactionScheduler implements
 	public EDFScheduler(List<String> columns, String table) {
 		super(columns, table);
 		pq = new PriorityQueue<Transaction>(10, this);
+		this.log = Logger.getLogger(EDFScheduler.class);
 	}
 }

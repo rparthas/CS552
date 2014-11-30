@@ -10,12 +10,14 @@ import edu.iit.cs552.entity.Transaction;
 
 public abstract class TransactionScheduler implements Runnable {
 
-	Logger log = Logger.getLogger(TransactionScheduler.class);
+  Logger log = Logger.getLogger(TransactionScheduler.class);
 
 	PriorityQueue<Transaction> pq = null;
 	public boolean stop = false;
 	Database db = null;
 	String table = null;
+	int miss = 0;
+	int hit = 0;
 
 	public TransactionScheduler(List<String> columns, String table) {
 		db = new Database();
@@ -36,12 +38,15 @@ public abstract class TransactionScheduler implements Runnable {
 			if (transaction == null)
 				continue;
 			if (transaction.madeDeadline()) {
-				log.info("Transaction " + transaction + " made its deadline");
+				log.debug("Transaction " + transaction + " made its deadline");
 				db.addData(transaction.getDataset(), table);
+				hit++;
 			} else {
-				log.error("Transaction " + transaction + " missed its deadline");
+				log.debug("Transaction " + transaction + " missed its deadline");
+				miss++;
 			}
 		}
+		log.info("Hit:[" + hit + "]Miss[" + miss + "]");
 	}
 
 }

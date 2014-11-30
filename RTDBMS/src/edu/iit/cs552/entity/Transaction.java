@@ -4,6 +4,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Transaction {
+	public long getStart() {
+		return start;
+	}
+
 	private List<String> dataset;
 
 	private long start = 0;
