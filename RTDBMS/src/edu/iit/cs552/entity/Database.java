@@ -41,22 +41,22 @@ public class Database {
 	}
 
 	public void addData(List<String> data, String table) {
+		synchronized (this) {
+			try {
+				String result = findByColumn(table, PRIMARY, data.get(0));
+				if (result.isEmpty()) {
 
-		try {
-			String result = findByColumn(table, PRIMARY, data.get(0));
-			if (result.isEmpty()) {
-
-				StringBuffer buffer = createData(data);
-				if (!writeToFile(buffer.toString(), table, true)) {
-					throw new Exception("Write failed");
+					StringBuffer buffer = createData(data);
+					if (!writeToFile(buffer.toString(), table, true)) {
+						throw new Exception("Write failed");
+					}
+				} else {
+					updateData(data, table, PRIMARY, data.get(0));
 				}
-			} else {
-				updateData(data, table, PRIMARY, data.get(0));
+			} catch (Exception e) {
+				log.error("Insert data failed", e);
 			}
-		} catch (Exception e) {
-			log.error("Insert data failed", e);
 		}
-
 	}
 
 	public void updateData(List<String> values, String table, String column,
@@ -73,7 +73,7 @@ public class Database {
 				if (first) {
 					index = Arrays.asList(rowCols).indexOf(column);
 					if (index == -1)
-						throw new Exception("Column does not exist");
+						break;
 				} else if (value.equals(rowCols[index])) {
 					StringBuffer buffer = createData(values);
 					data = buffer.toString();
@@ -84,10 +84,8 @@ public class Database {
 
 		} catch (Exception e) {
 			log.error("findByPrimaryKey failed", e);
-		} finally {
-			close(reader);
 		}
-
+		close(reader);
 		File file = new File(table);
 		if (file.delete()) {
 			File newFile = new File(table + "1");
@@ -108,7 +106,7 @@ public class Database {
 				if (first) {
 					index = Arrays.asList(columns).indexOf(column);
 					if (index == -1)
-						throw new Exception("Column does not exist");
+						break;
 				} else {
 					if (value.equals(columns[index])) {
 						result = data.replace(DELIMITER, "   ");
