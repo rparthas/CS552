@@ -80,6 +80,8 @@ public class AEDScheduler extends TransactionScheduler implements
 	}
 
 	private void calculate() {
+		hitRatio = 1;
+		hitAllRatio = 1;
 		hitCapacity = (int) Math.floor(hitCapacity * 1.05 * hitRatio);
 		if (hitAllRatio < 0.95) {
 			int size = hitQueue.size() + missList.size();
