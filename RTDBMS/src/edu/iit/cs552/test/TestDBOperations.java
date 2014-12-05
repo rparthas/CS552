@@ -16,6 +16,7 @@ import edu.iit.cs552.scheduler.NPScheduler;
 import edu.iit.cs552.scheduler.RPScheduler;
 import edu.iit.cs552.scheduler.TransactionScheduler;
 import edu.iit.cs552.utility.Constants;
+import edu.iit.cs552.utility.PropertyLoader;
 
 public class TestDBOperations {
 
@@ -23,10 +24,22 @@ public class TestDBOperations {
 
 	public static void main(String[] args) {
 
-		Integer[] deadlines = { 50, 70, 80, 200, 300, 300, 400, 500, 600, 800,
-				1000, 2000, 3000, 4000, 5000 };
-		Integer[] numTrans = { 10, 20, 25, 50, 100, 125, 150, 200, 300, 500,
-				700, 850, 1000, 1500, 2000 };
+		
+		
+		//Integer[] deadlines = { 50, 70, 80, 200, 300, 300, 400, 500, 600, 800,
+			//	1000, 2000, 3000, 4000, 5000 };
+		String [] values = PropertyLoader.getProperty("deadlines").split(",");
+		Integer[] deadlines = new Integer[values.length];
+		Integer[] numTrans = new Integer[values.length];
+		for(int i=0;i<values.length;i++){
+			deadlines[i]=Integer.parseInt(values[i]);
+		}
+		//Integer[] numTrans = { 10, 20, 25, 50, 100, 125, 150, 200, 300, 500,
+			//	700, 850, 1000, 1500, 2000 };
+		values = PropertyLoader.getProperty("numTrans").split(",");
+		for(int i=0;i<values.length;i++){
+			numTrans[i]=Integer.parseInt(values[i]);
+		}
 
 		Integer[][] results = new Integer[numTrans.length][5];
 
