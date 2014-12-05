@@ -49,7 +49,7 @@ public class TestDB {
 					deadlineGenerator.nextInt(Constants.DEADLINE));
 			int arrivalTime = 0;
 			while (arrivalTime != 0) {
-				arrivalTime = arrivalTimeGenerator.nextInt(15);
+				arrivalTime = arrivalTimeGenerator.nextInt(Constants.ARRIVAL);
 				sleep(arrivalTime);
 			}
 

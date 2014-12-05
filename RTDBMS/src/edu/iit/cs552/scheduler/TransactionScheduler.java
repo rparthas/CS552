@@ -12,6 +12,9 @@ public abstract class TransactionScheduler implements Runnable {
 	Database db = null;
 	String table = null;
 	public boolean stop = false;
+	public int miss = 0;
+	public int hit = 0;
+	public int total = 0;
 
 	public TransactionScheduler(List<String> columns, String table) {
 		db = new Database();

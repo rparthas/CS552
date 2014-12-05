@@ -3,8 +3,8 @@ package edu.iit.cs552.scheduler;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.log4j.Logger;
 
@@ -29,13 +29,12 @@ public class AEDScheduler extends TransactionScheduler implements
 
 	}
 
-	int miss = 0;
-	int hit = 0;
-	int total = 0;
 	int hitCapacity = 1;
+	int hitQueuehit = 0;
+	int hitQueueTran = 0;
 	double hitRatio = 1.0;
 	double hitAllRatio = 1.0;
-	PriorityQueue<Transaction> hitQueue = new PriorityQueue<Transaction>(
+	PriorityBlockingQueue<Transaction> hitQueue = new PriorityBlockingQueue<Transaction>(
 			Constants.CAPACITY, this);
 
 	public AEDScheduler(List<String> columns, String table) {
@@ -47,19 +46,22 @@ public class AEDScheduler extends TransactionScheduler implements
 		transaction.schedule();
 		transaction.setAedMapping(random.nextInt(Constants.CAPACITY));
 		int currIndex = hitQueue.size() + 1;
-		if (currIndex <= hitCapacity)
+		if (currIndex <= hitCapacity) {
+			hitQueueTran++;
 			hitQueue.offer(transaction);
-		else
+		} else
 			missList.add(transaction);
 	}
 
 	public void run() {
 		boolean canContinue = true;
 		while (canContinue) {
+			boolean hitGrp = false;
 			canContinue = !(stop && hitQueue.isEmpty() && missList.isEmpty());
 			Transaction transaction = null;
 			if (!hitQueue.isEmpty()) {
 				transaction = hitQueue.poll();
+				hitGrp = true;
 			} else if (!missList.isEmpty()) {
 				int index = new Random().nextInt(missList.size());
 				transaction = missList.get(index);
@@ -70,6 +72,8 @@ public class AEDScheduler extends TransactionScheduler implements
 				total++;
 				if (processTransaction(transaction, log)) {
 					hit++;
+					if (hitGrp)
+						hitQueuehit++;
 				} else {
 					miss++;
 				}
@@ -80,8 +84,10 @@ public class AEDScheduler extends TransactionScheduler implements
 	}
 
 	private void calculate() {
-		hitRatio = 1;
-		hitAllRatio = 1;
+		if (hitQueueTran == 0 || total == 0)
+			return;
+		hitRatio = hitQueuehit / hitQueueTran;
+		hitAllRatio = hit / total;
 		hitCapacity = (int) Math.floor(hitCapacity * 1.05 * hitRatio);
 		if (hitAllRatio < 0.95) {
 			int size = hitQueue.size() + missList.size();

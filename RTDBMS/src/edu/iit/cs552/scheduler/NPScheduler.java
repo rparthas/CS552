@@ -2,7 +2,7 @@ package edu.iit.cs552.scheduler;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.log4j.Logger;
 
@@ -14,10 +14,8 @@ public class NPScheduler extends TransactionScheduler implements
 
 	Logger log = Logger.getLogger(NPScheduler.class);
 
-	PriorityQueue<Transaction> pq = null;
-	int miss = 0;
-	int hit = 0;
-	int total = 0;
+	PriorityBlockingQueue<Transaction> pq = null;
+	
 
 	@Override
 	public int compare(Transaction t1, Transaction t2) {
@@ -29,7 +27,7 @@ public class NPScheduler extends TransactionScheduler implements
 
 	public NPScheduler(List<String> columns, String table) {
 		super(columns, table);
-		pq = new PriorityQueue<Transaction>(Constants.CAPACITY, this);
+		pq = new PriorityBlockingQueue<Transaction>(Constants.CAPACITY, this);
 		new Thread(this).start();
 	}
 

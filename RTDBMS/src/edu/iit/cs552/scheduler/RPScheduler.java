@@ -2,8 +2,8 @@ package edu.iit.cs552.scheduler;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import org.apache.log4j.Logger;
 
@@ -24,14 +24,11 @@ public class RPScheduler extends TransactionScheduler implements
 
 	}
 
-	PriorityQueue<Transaction> pq = null;
-	int miss = 0;
-	int hit = 0;
-	int total = 0;
+	PriorityBlockingQueue<Transaction> pq = null;
 
 	public RPScheduler(List<String> columns, String table) {
 		super(columns, table);
-		pq = new PriorityQueue<Transaction>(Constants.CAPACITY, this);
+		pq = new PriorityBlockingQueue<Transaction>(Constants.CAPACITY, this);
 		new Thread(this).start();
 	}
 
@@ -41,7 +38,7 @@ public class RPScheduler extends TransactionScheduler implements
 	}
 
 	public void run() {
-		while (!(stop && pq.isEmpty())) {
+		while (!(stop && pq.size() == 0)) {
 			Transaction transaction = pq.poll();
 			if (transaction != null) {
 				total++;
